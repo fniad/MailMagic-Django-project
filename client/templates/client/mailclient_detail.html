@@ -1,0 +1,52 @@
+{% extends 'mailing/base.html' %}
+{% load static %}
+{% load my_tags %}
+
+{% block content %}
+<div class="container" style="padding-top:40px; padding-bottom: 40px;">
+    <div class="row align-items-center mt-2">
+        <div class="col-1">
+            <a href="{% url 'client:list_clients' %}">
+                <img style="padding-bottom: 16px;" src="{% mediapath 'back.png' %}">
+            </a>
+        </div>
+        <div class="col">
+            <div class="pricing-header mb-4">
+                <h1 class="display-7 text-center fw-normal text-body-emphasis mb-4">Клиент - {{ object.full_name }}</h1>
+            </div>
+        </div>
+    </div>
+    <hr style="border: 0; height: 1px; background-color: #6c757d;">
+    <div class="row">
+        <div class="col-8">
+            <div class="container-sm" style="padding-bottom: 80px; width: 45%;
+    white-space: pre-wrap; overflow-wrap: break-word; hyphens: auto;">
+                <div class="row">
+                    <h5>ФИО: </h5>
+                    <p>{{ object.full_name }}</p>
+                    <h5>E-mail: </h5>
+                    <p>{{ object.email }}</p>
+                    <h5>Комментарий: </h5>
+                    <p>{{ object.comment }}</p>
+                </div>
+            </div>
+        </div>
+        {% if perms.client.change_mailclient or perms.client.delete_mailclient %}
+        <div class="col-2"
+             style="padding-bottom: 75px; padding-left: 30px; white-space: pre-wrap; overflow-wrap: break-word; hyphens: auto;">
+            <div class="row ">
+                {% if perms.client.change_mailclient %}
+                <a href="{% url 'client:update_client' object.pk %}" style="text-decoration: none; color: #FE4B09;">Редактировать</a>
+                {% endif %}
+                {% if perms.client.delete_mailclient %}
+                <a href="{% url 'client:delete_client' object.pk %}"
+                   style="text-decoration: none; color: red;">Удалить</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="pricing-header mt-4 mb-4">
+</div>
+{% endblock %}

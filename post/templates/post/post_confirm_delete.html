@@ -1,0 +1,23 @@
+{% extends 'mailing/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="padding-top:40px; padding-bottom: 40px;">
+    <div class="pricing-header mt-4 mb-4">
+        <h1 class="display-2 text-center fw-normal text-body-emphasis mb-4">Удалить статью</h1>
+    </div>
+    <hr style="border: 0; height: 1px; background-color: #6c757d;">
+    <div class="container-sm" style="padding-top: 40px; padding-bottom: 80px; width: 45%;">
+        <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p>Хотите удалить продукт {{ object.name_product }}?</p>
+            <button type="submit" class="btn btn-danger">Подтвердить</button>
+            <a href="{% url 'post:list_articles' %}" class="btn btn-warning">Отмена</a>
+        </form>
+    </div>
+    </div>
+</div>
+
+{% endblock %}

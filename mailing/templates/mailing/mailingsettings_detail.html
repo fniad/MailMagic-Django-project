@@ -1,0 +1,72 @@
+{% extends 'mailing/base.html' %}
+{% load static %}
+{% load my_tags %}
+
+{% block content %}
+<div class="container" style="padding-top:40px; padding-bottom: 40px;">
+    <div class="row align-items-center mt-2">
+        <div class="col-1">
+            <a href="{% url 'mailing:list_mailing' %}">
+                <img style="padding-bottom: 16px;" src="{% mediapath 'back.png' %}">
+            </a>
+        </div>
+        <div class="col">
+            <div class="pricing-header mb-4">
+                <h1 class="display-5 text-center fw-normal text-body-emphasis mb-4">Рассылка "{{ object.mailing_name }}"</h1>
+            </div>
+        </div>
+    </div>
+    <hr style="border: 0; height: 1px; background-color: #6c757d;">
+    <div class="row">
+        <div class="col-10">
+            <div class="row">
+                <div class="col-6" style="padding-bottom: 80px; padding-right: 15px; padding-top: 40px;
+                    overflow-wrap: break-word; hyphens: auto;">
+                    <div class="row">
+                            <h5>Периодичность:</h5>
+                            <p>{{ object.period }}</p>
+                            <h5>Статус:</h5>
+                            <p>{{ object.status }}</p>
+                            <h5>Время:</h5>
+                            <p>{{ object.time }}</p>
+                            <h5>Клиенты:</h5>
+                            <ul style="padding-left: 40px;">{% for client in object.clients.all %}
+                                <li>{{ client.full_name }} - {{ client.email }}</li>
+                                {% endfor %}
+                            </ul>
+                    </div>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-4" style="padding-bottom: 80px; padding-right: 15px; padding-left: 15px;
+                    white-space: pre-wrap; overflow-wrap: break-word; hyphens: auto;">
+                    <div class="row">
+                        {% for form in formset %}
+                        <h5 style="padding-bottom: 3px;">Заголовок:</h5>
+                        <p>{{ form.instance.subject }}</p>
+                        <h5 style="padding-bottom: 15px; padding-top: 15px;">Тело письма:</h5>
+                        <p>{{ form.instance.body }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-1"></div>
+            </div>
+        </div>
+        {% if perms.mailing.change_mailingsettings or perms.mailing.delete_mailingsettings %}
+        <div class="col-2"
+             style="padding-bottom: 75px; padding-left: 30px; white-space: pre-wrap; overflow-wrap: break-word; hyphens: auto;">
+            <div class="row ">
+                {% if perms.mailing.change_mailingsettings %}
+                <a href="{% url 'mailing:update_mailing' object.pk %}"
+                   style="text-decoration: none; color: #FE4B09;">Редактировать</a>
+                {% endif %}
+                {% if perms.mailing.delete_mailingsettings %}
+                <a href="{% url 'mailing:delete_mailing' object.pk %}" style="text-decoration: none; color: red;">Удалить</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="pricing-header mt-4 mb-4">
+</div>
+{% endblock %}

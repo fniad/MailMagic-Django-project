@@ -1,0 +1,47 @@
+{% extends 'mailing/base.html' %}
+{% load static %}
+{% load my_tags %}
+
+{% block content %}
+<div class="container" style="padding-top:40px;">
+    <div class="row align-items-center mt-2">
+        <div class="col-1">
+            <a href="{% url 'mailing:list_mailing_log' %}">
+                <img style="padding-bottom: 16px;" src="{% mediapath 'back.png' %}">
+            </a>
+        </div>
+        <div class="col">
+            <div class="pricing-header mb-4">
+                <h1 class="display-7 text-center fw-normal text-body-emphasis mb-4">Лог рассылки
+                    "{{ object.mailing_settings_str }}" от {{ object.sent_datetime }}</h1>
+            </div>
+        </div>
+    </div>
+    <hr style="border: 0; height: 1px; background-color: #6c757d;">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col" style="padding-bottom: 10px; padding-right: 15px;
+                    white-space: pre-wrap; overflow-wrap: break-word; hyphens: auto;">
+                    <div class="row">
+                        <h5>Рассылка:</h5>
+                        <a href="#"><p>{{ object.mailing_settings_str }}</p></a>
+                        <h5>Статус:</h5>
+                        <p>{{ object.status }}</p>
+                        <h5>Время:</h5>
+                        <p>{{ object.sent_datetime }}</p>
+                        <h5>Клиент:</h5>
+                        <p>{{ object.client.email }} - {{ object.client.full_name }}</p>
+                        <h5>Ответ сервера:</h5>
+                        <p>{{ object.server_response }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="pricing-header mt-4 mb-4">
+</div>
+{% endblock %}
