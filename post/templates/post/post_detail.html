@@ -1,0 +1,49 @@
+{% extends 'mailing/base.html' %}
+{% load static %}
+{% load my_tags %}
+
+{% block content %}
+<div class="row" style="padding-top:40px; padding-bottom: 40px; ">
+    <div class="col-3"><p></p></div>
+    <div class="col-6">
+        <div class="container"
+             style="width: 100%; height: 250px; overflow: hidden; padding-bottom: 30px;">
+            <img src="{% mediapath object.preview_img %}" class="img-fluid"
+                 style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <hr style="border: 0; height: 1px; background-color: #6c757d;">
+        <div class="text-header mt-4">
+            <h1 class="display-6 text-center fw-normal text-body-emphasis">{{ object.title }}</h1>
+        </div>
+        <hr style="border: 0; height: 1px; background-color: #6c757d;">
+        <div class="container-sm" style="padding-bottom: 10px; width: 100%;
+    white-space: pre-wrap; overflow-wrap: break-word; hyphens: auto;">
+            <p class="text text-center">{{ object.date_published }}</p>
+            <p>{{ object.body }}</p>
+        </div>
+        {% if user.is_staff %}
+        <div class="row justify-content-end" style="padding-top:10px;">
+            <div class="row">
+                <p class="text text-center">Просмотры: {{ object.views_count }}</p>
+            </div>
+            <div class="row mt-4">
+                <div class="col-9"></div>
+                <div class="col-3">
+                    <div class="btn-group">
+                        {% if perms.post.add_post %}
+                        <a href="{% url 'post:edit_article' object.pk %}"
+                           class="btn btn-sm btn-outline-secondary">Редактировать</a>
+                        {% endif %}
+                        {% if perms.post.delete_post %}
+                        <a href="{% url 'post:delete_article' object.pk %}"
+                           class="btn btn-sm btn-outline-warning">Удалить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-3"><p></p></div>
+</div>
+{% endblock %}

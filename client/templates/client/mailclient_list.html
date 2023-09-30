@@ -1,0 +1,71 @@
+{% extends 'mailing/base.html' %}
+{% load static %}
+{% load my_tags %}
+{% block content %}
+<div class="container" style="padding-top: 40px;">
+    <div class="container border-bottom"
+         style="width: 100%; height: 450px; overflow: hidden; padding-top: 50px; padding-bottom: 70px;">
+        <img src="{% mediapath 'clients_img.jpg' %}" class="img-fluid"
+             style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    {% if perms.client.add_mailclient %}
+    <div class="col-6 mb-1 mt-3">
+        <a class="btn btn-sm btn-outline-secondary" href="{% url 'client:create_client' %}">Добавить клиента</a>
+    </div>
+    {% endif %}
+    <h3 class="display-5 text-center fw-normal text-body-emphasis" style="padding-top: 30px;">Клиенты</h3>
+    <div class="container" style="padding-top: 50px;">
+        <div class="row mb-3">
+            {% if page_obj %}
+            <table class="table table-strip">
+                <thead>
+                <tr>
+                    <th style="width: 5%">№</th>
+                    <th style="width: 25%">ФИО</th>
+                    <th style="width: 30%">EMAIL</th>
+                    <th style="width: 26%">Детали</th>
+                    {% if perms.client.change_mailclient %}
+                    <th style="width: 7%"></th>
+                    {% endif %}
+                    {% if perms.client.delete_mailclient %}
+                    <th style="width: 7%"></th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for object in page_obj %}
+                <tr>
+                    <td style="width: 5%">{{ forloop.counter }}</td>
+                    <td style="width: 25%">{{ object.full_name }}</td>
+                    <td style="width: 30%">{{ object.email }}</td>
+                    <td style="width: 26%"><a href="{% url 'client:view_client' object.pk %}" style="color: #FE4B09;">Подробнее</a></td>
+                    {% if perms.client.change_mailclient %}
+                    <td style="width: 7%"><a href="{% url 'client:update_client' object.pk %}" style="text-decoration: none; color: #FE4B09;">Редактировать</a></td>
+                    {% endif %}
+                    {% if perms.client.delete_mailclient %}
+                    <td style="width: 7%"><a href="{% url 'client:delete_client' object.pk %}" style="text-decoration: none; color: red;">Удалить</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+                {% else %}
+                <p class="text-center">На текущий момент клиентов нет.</p>
+                {% endif %}
+            </table>
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1" style="color: #FE4B09;">&laquo; первая</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" style="color: #FE4B09;">предыдущая</a>
+                {% endif %}
+            <span class="current-page">{{ page_obj.number }}</span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" style="color: #FE4B09;">следующая</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" style="color: #FE4B09;">последняя &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}

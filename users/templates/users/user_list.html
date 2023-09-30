@@ -1,0 +1,68 @@
+{% extends 'mailing/base.html' %}
+{% load static %}
+{% load my_tags %}
+{% block content %}
+<div class="container" style="padding-top: 40px;">
+    <div class="container border-bottom"
+         style="width: 100%; height: 450px; overflow: hidden; padding-top: 50px; padding-bottom: 70px;">
+        <img src="{% mediapath 'logs.jpg' %}" class="img-fluid"
+             style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    <h3 class="display-5 text-center fw-normal text-body-emphasis" style="padding-top: 30px;">Пользователи</h3>
+    <div class="container" style="padding-top: 50px;">
+        <div class="row mb-3">
+            {% if page_obj %}
+            <table class="table table-strip">
+                <thead>
+                <tr>
+                    <th style="width: 5%">№</th>
+                    <th style="width: 40%">Email</th>
+                    <th style="width: 20%">Телефон</th>
+                    <th style="width: 15%">Страна</th>
+                    <th style="width: 15%">Статус</th>
+                    <th style="width: 5%"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for object in page_obj %}
+                <tr>
+                    <td style="width: 5%">{{ forloop.counter }}</td>
+                    <td style="width: 40%">{{ object.email }}</td>
+                    <td style="width: 20%">{% if object.phone %} {{ object.phone }} {% else %} ---- {% endif %}</td>
+                    <td style="width: 15%">{% if object.country %} {{ object.country }} {% else %} ---- {% endif %}</td>
+                    <td style="width: 15%">{% if object.is_active %} Активен {% else %} Заблокирован {% endif %}</td>
+                    <td style="width: 5%">
+                        <form action="{% url 'users:toggle_status' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="object_id" value="{{ object.id }}">
+                            <button type="submit" class="btn btn-outline-danger">
+                                {% if object.is_active %} Заблокировать {% else %} Разблокировать {% endif %}
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="text-center">На текущий момент пользователей нет.</p>
+            {% endif %}
+        </div>
+        {% if page_obj %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; первая</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" style="color: #FE4B09;">предыдущая</a>
+                {% endif %}
+            <span class="current-page">{{ page_obj.number }}</span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" style="color: #FE4B09;">следующая</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" style="color: #FE4B09">последняя &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

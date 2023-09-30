@@ -1,0 +1,69 @@
+{% extends 'mailing/base.html' %}
+{% load static %}
+{% load my_tags %}
+
+{% block content %}
+<div class="container" style="padding-top: 40px;">
+    <h3 class="display-5 text-center fw-normal text-body-emphasis" style="padding-top: 30px;">Статьи</h3>
+    <hr style="border: 0; height: 1px; background-color: #6c757d;">
+    {% if perms.post.add_post %}
+    <div class="col-12 mb-5">
+        <a class="btn btn-sm btn-outline-secondary" href="{% url 'post:create_article' %}">Добавить статью</a>
+    </div>
+    {% endif %}
+    <div class="container" style="padding-top: 50px;">
+        <div class="row mb-3">
+            {% for object in page_obj %}
+            <div class="col-4" style="padding-bottom: 20px;">
+                <div class="card shadow-sm" style="height: 600px;">
+                    <div class="bd-placeholder-img card-img-top"
+                         style="height: 200px; overflow: hidden;">
+                        <img src="{% mediapath object.preview_img %}" class="img-fluid"
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="card-body" style="height: 250px;">
+                        <div class="position-relative">
+
+                            {% if object.title|length > 35 %}
+                            <p class="card-text" style="font-size: 120%; padding-top: 10px; padding-bottom: 5px;">
+                                <a href="{% url 'post:view_article' object.pk %}" style="color: #FE4B09;">
+                                    {{ object.title|slice:":35" }}...</a>
+                            </p>
+                            {% else %}
+                            <p class="card-text" style="font-size: 120%; padding-top: 10px; padding-bottom: 5px;">
+                                <a href="{% url 'post:view_article' object.pk %}" style="color: #FE4B09;">
+                                    {{ object.title }}</a>
+                            </p>
+                            {% endif %}
+
+                            {% if object.body|length > 650 %}
+                            <p class="card-text"
+                               style="min-height: 120px; max-height: 120px; font-size: 85%;">
+                                {{ object.body|slice:":650" }}...</p>
+                            {% else %}
+                            <p class="card-text"
+                               style="min-height: 120px; max-height: 120px; font-size: 85%;">
+                                {{ object.body|slice:":650" }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1" style="color: #FE4B09;">&laquo; первая</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" style="color: #FE4B09;">предыдущая</a>
+                {% endif %}
+            <span class="current-page">{{ page_obj.number }}</span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" style="color: #FE4B09;">следующая</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" style="color: #FE4B09;">последняя &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}

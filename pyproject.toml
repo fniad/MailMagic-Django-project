@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "coursework-6"
+version = "0.1.0"
+description = ""
+authors = ["fniad <artkamproject@gmail.com>"]
+readme = "README.md"
+packages = [{include = "coursework_6"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-dotenv = "^1.0.0"
+pytz = "^2023.3.post1"
+django-crontab = "^0.7.1"
+redis = "^5.0.0"
+secure-smtplib = "^0.1.1"
+psycopg2-binary = "2.9.7"
+pillow = "10.0.1"
+pytils = "^0.4.1"
+python-decouple = "^3.8"
+django = "^4.2.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+
+
+

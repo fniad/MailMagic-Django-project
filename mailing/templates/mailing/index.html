@@ -1,0 +1,163 @@
+{% extends 'mailing/base.html' %}
+{% load static %}
+{% load my_tags %}
+
+
+{% block content %}
+
+<div class="container border-bottom"
+     style="width: 100%; height: 450px; overflow: hidden; padding-top: 50px; padding-bottom: 70px;">
+    <img src="{% mediapath 'base_img.jpg' %}" class="img-fluid"
+         style="width: 100%; height: 100%; object-fit: cover;">
+</div>
+
+<div class="container" style="padding-top: 40px;">
+    <h1 class="display-4 text-center fw-normal text-body-emphasis" style="padding-bottom: 30px;">Добро пожаловать в
+        MailMagic</h1>
+    <div class="row" style="padding-bottom: 30px;">
+        <p>Мы - сервис, который работает с рассылками по времени. И с нами ты забудешь о стандартных почтовых клиентах,
+            где отправка писем кажется бесконечным мучением. </p>
+        <p>Устанавливай время, добавляй получателей и наслаждайся результатом.
+            Если хочешь продавать товары или услуги, не упускай шанс использовать нашу функцию автоматизации. Отправляй
+            персонализированные предложения и забудь о страхе забыть отправить письма. </p>
+        <p>Функционал сервиса поможет
+            настроить рассылки по времени, а также сделать их ежедневными, еженедельными или ежемесячными.
+        </p>
+        <p>Не теряй время. Присоединяйся к нам в MailMagic.</p>
+    </div>
+
+    <hr style="border: 0; height: 1px; background-color: #6c757d;">
+    <div class="container" style="padding-top: 40px; padding-bottom: 30px;">
+        <div class="container d-flex align-items-center justify-content-center">
+            <div class="row mb-3 ">
+                <div class="col-4 text-center"><h1>{{ mailing_count }}</h1>
+                    <p> общее количество рассылок</p></div>
+                <div class="col-4 text-center"><h1>{{ mailing_active_count }}</h1>
+                    <p> количество активных рассылок</p></div>
+                <div class="col-4 text-center"><h1>{{ count_unique_clients }}</h1>
+                    <p> количество уникальных клиентов</p></div>
+            </div>
+        </div>
+    </div>
+    <hr style="border: 0; height: 1px; background-color: #6c757d;">
+    <div class="row" style="padding-top: 50px; ">
+        <div class="col-4" style="padding-bottom: 20px;">
+            <a href="{% url 'mailing:list_mailing' %}" style="text-decoration: none;">
+                <div class="card shadow-sm rounded" style="height: 500px;">
+                    <div class="card-body d-flex align-items-center justify-content-center"
+                         style="height: 250px; position: relative;">
+                        <div style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.6)),
+                        url('{% mediapath 'mailing.jpg' %}');
+                        background-size: cover; background-position: center;
+                        width: 100%; height: 100%; position: absolute; top: 0; left: 0; border-radius: 1%"></div>
+                        <div class="position-relative text-center">
+                            <h1 class="card-text"
+                                style="font-size: 190%; padding-top: 50px; padding-bottom: 5px;">
+                                <a href="{% url 'mailing:list_mailing' %}" style="text-decoration: none; color: white;">
+                                    Рассылки</a>
+                            </h1>
+                            <p class="card-text"
+                               style="color: white; min-height: 120px; max-height: 120px; font-size: 95%;">
+                                Перейти к своим рассылкам</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{% url 'client:list_clients' %}" style="text-decoration: none;">
+                <div class="card shadow-sm rounded" style="height: 500px;">
+                    <div class="card-body d-flex align-items-center justify-content-center"
+                         style="height: 250px; position: relative; overflow: hidden;">
+                        <div style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.6)),
+                        url('{% mediapath 'clients.jpg' %}');
+                        background-size: cover; background-position: center;
+                        width: 100%; height: 100%; position: absolute; top: 0; left: 0; border-radius: 1%"></div>
+                        <div class="position-relative text-center">
+                            <h1 class="card-text"
+                                style="font-size: 190%; padding-top: 50px; padding-bottom: 5px;">
+                                <a href="{% url 'client:list_clients' %}" style="text-decoration: none; color: white;">
+                                    Клиенты</a>
+                            </h1>
+                            <p class="card-text"
+                               style="color: white; min-height: 120px; max-height: 120px; font-size: 95%;">
+                                Перейти к списку клиентов</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-4" style="padding-bottom:70px;">
+            <a href="{% url 'mailing:list_mailing_log' %}" style="text-decoration: none;">
+                <div class="card shadow-sm rounded" style="height: 500px;">
+                    <div class="card-body d-flex align-items-center justify-content-center"
+                         style="height: 250px; position: relative;">
+                        <
+                        <div style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.6)),
+                        url('{% mediapath 'logs.jpg' %}');
+                        background-size: cover; background-position: center;
+                        width: 100%; height: 100%; position: absolute; top: 0; left: 0; border-radius: 1%"></div>
+                        <div class="position-relative text-center">
+                            <h1 class="card-text"
+                                style="font-size: 190%; padding-top: 50px; padding-bottom: 5px;">
+                                <a href="{% url 'mailing:list_mailing_log' %}"
+                                   style="text-decoration: none; color: white;">
+                                    Лог-файлы рассылок</a>
+                            </h1>
+                            <p class="card-text"
+                               style="color: white; min-height: 120px; max-height: 120px; font-size: 95%;">
+                                Перейти к истории рассылок</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <hr style="border: 0; height: 1px; background-color: #6c757d;">
+        <h1 class="display-4 text-center fw-normal text-body-emphasis" style="padding-bottom: 30px; padding-top:20px;">
+            Наши статьи</h1>
+        <div class="row text-center" style="padding-bottom: 30px;">
+            <p>Также вы можете ознакомиться с нашими статьями. Наш блог посвящен теме ведения рассылок и научит вас
+                использовать современные инструменты для управления
+                вашей аудиторией. Мы предлагаем полный набор советов, стратегий и лучших практик, чтобы помочь вам
+                достичь максимальных результатов.</p>
+        </div>
+        <div class="row mb-3">
+            {% for object in articles %}
+            <div class="col-4" style="padding-bottom: 20px;">
+                <div class="card shadow-sm" style="height: 600px;">
+                    <div class="bd-placeholder-img card-img-top"
+                         style="height: 200px; overflow: hidden;">
+                        <img src="{% mediapath object.preview_img %}" class="img-fluid"
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="card-body" style="height: 250px;">
+                        <div class="position-relative">
+                            {% if object.title|length > 35 %}
+                            <p class="card-text" style="font-size: 120%; padding-top: 10px; padding-bottom: 5px;">
+                                <a href="{% url 'post:view_article' object.pk %}" style="color: #FE4B09;">
+                                    {{ object.title|slice:":35" }}...</a>
+                            </p>
+                            {% else %}
+                            <p class="card-text" style="font-size: 120%; padding-top: 10px; padding-bottom: 5px;">
+                                <a href="{% url 'post:view_article' object.pk %}" style="color: #FE4B09;">
+                                    {{ object.title }}</a>
+                            </p>
+                            {% endif %}
+
+                            {% if object.body|length > 650 %}
+                            <p class="card-text"
+                               style="min-height: 120px; max-height: 120px; font-size: 85%;">
+                                {{ object.body|slice:":650" }}...</p>
+                            {% else %}
+                            <p class="card-text"
+                               style="min-height: 120px; max-height: 120px; font-size: 85%;">
+                                {{ object.body|slice:":650" }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
