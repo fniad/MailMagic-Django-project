@@ -6,7 +6,7 @@ dotenv.load_dotenv()
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
-from smtplib import SMTPException
+from smtplib import SMTPException, SMTPRecipientsRefused
 from datetime import datetime, timedelta
 import pytz
 from decouple import config
@@ -72,14 +72,13 @@ def send_email(mailing_client, mailing_message, mailing):
         mailing_log.mailing_settings.set([mailing])
         mailing_log.mailing_settings_str = mailing.mailing_name
         mailing_log.save()
-
-    except SMTPException as e:
+    except (SMTPException, SMTPRecipientsRefused) as e:
         mailing_log = MailingLog.objects.create(
             client=mailing_client,
             mailing_settings=mailing,
             sent_datetime=now,
             status=MailingLog.STATUS_FAIL,
-            server_response=e
+            server_response=str(e)
         )
         mailing_log.mailing_settings.set([mailing])
         mailing_log.mailing_settings_str = mailing.mailing_name
