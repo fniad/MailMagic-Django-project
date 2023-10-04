@@ -1,46 +1,60 @@
-Инструкция по запуску проекта на ОС Linux Ubuntu
+# MailMagic - Сервис рассылок на основе Django
 
-Шаг 1. Клонирование репозитория
+## Функционал
 
-1. git clone https://github.com/fniad/coursework_6.git
-2. cd coursework_6
+- Создание и настройка рассылок с выбором периодичности: ежедневно, еженедельно или ежемесячно.
+- Гибкое планирование времени отправки сообщений для повышения эффективности: возможность выбрать час отправки.
+- Возможность просмотра логов с информацией о каждом отправленном письме.
+- Хранение данных о клиентах рассылок для более глубокого анализа и взаимодействия.
+- Настроеные права для модератора и контент-менеджера блога.
 
-Шаг 2. Установка зависимостей
+## Блог
 
-1. python3 poetry install
-2. poetry shell
+В блоге MailMagic статьи с полезными советами и стратегиями, которые помогут улучшить рассылки пользователям.
 
-Шаг 3. Установка и настройка Redis
+## Инструкция по запуску проекта на ОС Linux Ubuntu
 
-1. sudo apt-get install redis-server
-2. sudo service redis-server start
-3. redis-cli ping (в ответ должно прийти 'PONG')
+### Шаг 1. Клонирование репозитория
 
-Шаг 4. Установка и настройка PostgreSQL
+1. ```git clone https://github.com/fniad/MailMagic-Django-project.git```
+2. ```cd mailmagic-django-project```
 
-1. sudo apt-get install postgresql
-2. sudo -u postgres psql
-3. CREATE DATABASE seller_message;
-4. \q
+### Шаг 2. Установка зависимостей
 
-Шаг 5. Настройка окружения
+1. ```python3 poetry install```
+2. ```poetry shell```
 
-1. touch .env
-2. nano .env и заполнить по шаблону из .env.test
+### Шаг 3. Установка и настройка Redis
 
-Шаг 6. Применение миграций
+1. ```sudo apt-get install redis-server```
+2. ```sudo service redis-server start```
+3. ```redis-cli ping``` (в ответ должно прийти **'PONG'**)
 
-1. python3 manage.py migrate
+### Шаг 4. Установка и настройка PostgreSQL
 
-Шаг 7. Загрузка данных с помощью команд 
+1. ```sudo apt-get install postgresql```
+2. ```sudo -u postgres psql```
+3. ```CREATE DATABASE seller_message;```
+4. ```\q```
 
-1. python3 manage.py fill_db
+### Шаг 5. Настройка окружения
 
-Шаг 8. Создание суперпользователя, а также модератора и блоггера. Раздача прав доступа.
+1. ```touch .env```
+2. ```nano .env``` и заполнить по шаблону из **.env.test**
 
-1. python3 manage.py csu
-2. python3 manage.py create_groups
-3. python3 manage.py create_moderator_and_blogger
+### Шаг 6. Применение миграций
 
-Шаг 9. Запуск сервера
-1. python3 manage.py runserver
+1. ```python3 manage.py migrate```
+
+### Шаг 7. Загрузка данных с помощью команд 
+
+1. ```python3 manage.py fill_db```
+
+### Шаг 8. Создание суперпользователя, а также модератора и блоггера. Раздача прав доступа.
+
+1. ```python3 manage.py csu```
+2. ```python3 manage.py create_groups```
+3. ```python3 manage.py create_moderator_and_blogger```
+
+### Шаг 9. Запуск сервера
+1. ```python3 manage.py runserver```
