@@ -18,6 +18,9 @@ pillow = "10.0.1"
 pytils = "^0.4.1"
 python-decouple = "^3.8"
 django = "^4.2.5"
+django-stubs = "^4.2.4"
+pylint = "^3.0.1"
+email-validator = "^2.0.0.post2"
 
 
 [build-system]
