@@ -17,4 +17,5 @@ class Command(BaseCommand):
             data = serializers.serialize('json', chain(*[model.objects.all() for model in models]))
             file.write(data)
 
-        self.stdout.write(self.style.SUCCESS('Данные из БД успешно сохранены в data.json'))
+        self.stdout.write(self.style.SUCCESS('Объекты были добавлены в БД'))
+
